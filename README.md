@@ -1,6 +1,6 @@
 # SQC_Wash
 
-Clean ur dirty money with this simple washing script
+Clean ur dirty money with this simple washing script.
 
 ## Table of Contents
 
