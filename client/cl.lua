@@ -1,15 +1,12 @@
 ESX = exports['es_extended']:getSharedObject()
-
 function animChance()
     local playerId = PlayerPedId()
     local playerC  = GetEntityCoords(playerId)
     local hasMoney = exports.ox_inventory:Search('count', 'black_money')
     local luck     = math.random(1, 10)
-
     local input = lib.inputDialog('washing machine', {
-        {type = 'number', label = 'Min = 10 , Max 100k', description = 'Clean ur dirty money bad boy'},
+        {type = 'number', label = 'Min = '..Config.Min..' , Max = '..Config.Max, description = 'Clean ur dirty money bad boy'},
       })
-
       if not input then
         lib.notify({
             title         = 'Error Exited',
@@ -23,7 +20,7 @@ function animChance()
       if not wash then
         lib.notify({
             title         = 'Error amount',
-            description   = 'You didnt enter amounts',
+            description   = 'You didnt enter amounts ',
             type          = 'error',
             icon          = 'fa-solid fa-money-bill-1-wave'
         })
@@ -39,16 +36,16 @@ function animChance()
             return
         end
 
-         if wash < 10 or wash > 100000 then
+         if wash < Config.Min or wash > Config.Max then
             lib.notify({
-                title         = 'Error Washing (10-100k)',
+                title         = 'Error Washing',
                 description   = 'Amount must be between 10 and 100,000.',
                 type          = 'error',
                 icon          = 'fa-solid fa-money-bill-1-wave'
             })
             return
+        
         end
-
 
     if hasMoney >= wash then
         for k, vector in pairs(Config.washing) do
@@ -84,10 +81,10 @@ function animChance()
 end
 
 for k, v in pairs(Config.washing) do
-
-    local point = lib.points.new(v, 5, {})
+    local point = lib.points.new(v, 3, {})
 
     function point:onEnter()
+        
         lib.showTextUI('[E] - Wash money', {
             position              = "right-center",
             icon                  = 'hand',
@@ -97,6 +94,7 @@ for k, v in pairs(Config.washing) do
                 color             = 'white'
             }
         })
+        
     end
 
     function point:onExit() lib.hideTextUI() end
@@ -106,7 +104,7 @@ for k, v in pairs(Config.washing) do
             DrawMarker(29, self.coords.x, self.coords.y, self.coords.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 1.0, 1.0, 1.0, 200, 20, 20, 50, false, true, 2, false, nil, nil, false)
         end
 
-        if self.currentDistance < 1 and IsControlJustReleased(0, 38) then
+        if self.currentDistance < 2 and IsControlJustReleased(0, 38) then
             animChance()
         end
     end

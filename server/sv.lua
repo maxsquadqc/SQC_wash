@@ -1,6 +1,10 @@
 ESX = exports['es_extended']:getSharedObject()
 local ox_inventory = exports.ox_inventory
 
+RegisterNetEvent('esx:playerLoaded', function(player, xPlayer, isNew)
+
+  end)
+
 RegisterNetEvent('sqc:washingMoney')
 AddEventHandler('sqc:washingMoney', function(chance, hasMoney, id, distance, playerPos, wash)
     if chance      == nil then return end
