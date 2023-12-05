@@ -49,15 +49,15 @@ function animChance()
 
     if hasMoney >= wash then
         for k, vector in pairs(Config.washing) do
-            local dist = #(playerC - vector)
+            local dist = #(playerC - vector.loc)
 
-            if dist >= 1 then
+            if dist > 1.5 then
                 if luck < 9 then
                     if lib.progressCircle({
                         duration       = wash / 2,
                         position       = 'bottom',
                         useWhileDead   = false,
-                        canCancel      = false,
+                        canCancel      = true,
                         disable        = {car = true, move = true},
                         anim           = {
                             dict       = 'mp_player_intdrink', -- 'mp_player_intdrink'
@@ -80,8 +80,9 @@ function animChance()
    return end
 end
 
-for k, v in pairs(Config.washing) do
-    local point = lib.points.new(v, 3, {})
+for shop, data in pairs(Config.washing) do
+    print(data.loc)
+    local point = lib.points.new(data.loc, 2, {})
 
     function point:onEnter()
         
@@ -104,7 +105,7 @@ for k, v in pairs(Config.washing) do
             DrawMarker(29, self.coords.x, self.coords.y, self.coords.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 1.0, 1.0, 1.0, 200, 20, 20, 50, false, true, 2, false, nil, nil, false)
         end
 
-        if self.currentDistance < 2 and IsControlJustReleased(0, 38) then
+        if self.currentDistance < 2 and IsControlJustPressed(0, 38) then
             animChance()
         end
     end
