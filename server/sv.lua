@@ -4,6 +4,29 @@ local ox_inventory = exports.ox_inventory
 RegisterNetEvent('esx:playerLoaded', function(player, xPlayer, isNew)
 
   end)
+RegisterNetEvent('sqc:check:job')
+AddEventHandler('sqc:check:job', function()
+ local source = source
+ local xPlayer = ESX.GetPlayerFromId(source)
+ local hasJob = false
+
+ for _ , v in ipairs(Config.whiteListJobs) do
+   if xPlayer.getJob().name == v then
+    TriggerClientEvent('sqc:allowed:job', source)
+    hasJob = true
+    break
+   end
+end
+if not hasJob then
+    TriggerClientEvent('ox_lib:notify', source, {
+        title = 'Washing machine',
+        description = 'You dont have the required job to do this.',
+        duration = 5000,
+        type = 'error',
+        icon = 'fa-solid fa-money-bill-1-wave'
+    })
+end
+end)
 
 RegisterNetEvent('sqc:washingMoney')
 AddEventHandler('sqc:washingMoney', function(chance, hasMoney, id, distance, playerPos, wash)
