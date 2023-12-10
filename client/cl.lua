@@ -1,4 +1,5 @@
 ESX = exports['es_extended']:getSharedObject()
+
 function animChance()
     local playerId = PlayerPedId()
     local playerC  = GetEntityCoords(playerId)
@@ -81,7 +82,7 @@ function animChance()
 end
 
 for shop, data in pairs(Config.washing) do
-    print(data.loc)
+    local xPlayer = ESX.GetPlayerData()
     local point = lib.points.new(data.loc, 2, {})
 
     function point:onEnter()
@@ -106,7 +107,12 @@ for shop, data in pairs(Config.washing) do
         end
 
         if self.currentDistance < 2 and IsControlJustPressed(0, 38) then
-            animChance()
+            TriggerServerEvent('sqc:check:job')
         end
     end
 end
+
+RegisterNetEvent('sqc:allowed:job')
+AddEventHandler('sqc:allowed:job', function()
+    animChance()
+end)
