@@ -1,7 +1,7 @@
 Config = {}
 
 
-Config.whiteListJobs = {
+Config.whiteListJobs = { -- Add/Change job only job here will be allowed to wash money
     'police',
     'ems',
     'mechanic',
