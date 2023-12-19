@@ -1,5 +1,6 @@
 Config = {}
 
+Config.job = true  -- Change this to false if you dont want to use Job
 
 Config.whiteListJobs = { -- Add/Change job only job here will be allowed to wash money
     'police',
@@ -10,7 +11,7 @@ Config.whiteListJobs = { -- Add/Change job only job here will be allowed to wash
 Config.Min = 10   -- Minimum to start washing dirty money
 Config.Max = 100000 -- Maximum to wash ur dirty money
 
-Config.percentage = 0.60
+Config.percentage = 0.60 -- How much clean money you will get in return
 
 -- add more washing coord if you want.
 Config.washing = {
