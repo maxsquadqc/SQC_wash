@@ -10,12 +10,18 @@ AddEventHandler('sqc:check:job', function()
  local xPlayer = ESX.GetPlayerFromId(source)
  local hasJob = false
 
+if Config.job then
  for _ , v in ipairs(Config.whiteListJobs) do
    if xPlayer.getJob().name == v then
     TriggerClientEvent('sqc:allowed:job', source)
     hasJob = true
-    break
+    return
    end
+end
+end
+if not Config.job then
+    TriggerClientEvent('sqc:allowed:job', source)
+    return
 end
 if not hasJob then
     TriggerClientEvent('ox_lib:notify', source, {
