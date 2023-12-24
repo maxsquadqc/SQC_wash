@@ -1,8 +1,8 @@
 ESX = exports['es_extended']:getSharedObject()
 
-function animChance()
+local function cleanMoney()
     local playerId = PlayerPedId()
-    local playerC  = GetEntityCoords(playerId)
+    local playerPos  = GetEntityCoords(playerId)
     local hasMoney = exports.ox_inventory:Search('count', 'black_money')
     local luck     = math.random(1, 10)
     local input = lib.inputDialog('washing machine', {
@@ -13,7 +13,7 @@ function animChance()
             title         = 'Error Exited',
             description   = 'Canceled',
             type          = 'error',
-            icon          = 'fa-solid fa-money-bill-1-wave'
+            icon          = 'fa-solid fa-circle-exclamation'
         })
          return end
       local wash = tonumber(input[1])
@@ -42,7 +42,7 @@ function animChance()
                 title         = 'Error Washing',
                 description   = 'Amount must be between 10 and 100,000.',
                 type          = 'error',
-                icon          = 'fa-solid fa-money-bill-1-wave'
+                icon          = 'fa-solid fa-circle-exclamation'
             })
             return
         
@@ -50,7 +50,7 @@ function animChance()
 
     if hasMoney >= wash then
         for k, vector in pairs(Config.washing) do
-            local dist = #(playerC - vector.loc)
+            local dist = #(playerPos - vector.loc)
 
             if dist > 1.5 then
                 if luck < 9 then
@@ -65,7 +65,7 @@ function animChance()
                             clip       = 'loop_bottle'  -- 'loop_bottle'
                         }
                     }) then
-                        TriggerServerEvent('sqc:washingMoney', luck, hasMoney, playerId, dist, playerC, wash)
+                        TriggerServerEvent('sqc:server:washingMoney', luck, hasMoney, playerId, dist, playerPos, wash)
                         
                     end
                 else
@@ -102,17 +102,17 @@ for shop, data in pairs(Config.washing) do
     function point:onExit() lib.hideTextUI() end
 
     function point:nearby()
-        if self.currentDistance < 3 then
+        if self.currentDistance < 2 then
             DrawMarker(29, self.coords.x, self.coords.y, self.coords.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 1.0, 1.0, 1.0, 200, 20, 20, 50, false, true, 2, false, nil, nil, false)
         end
 
         if self.currentDistance < 2 and IsControlJustPressed(0, 38) then
-            TriggerServerEvent('sqc:check:job')
+            TriggerServerEvent('sqc:server:check:job')
         end
     end
 end
 
-RegisterNetEvent('sqc:allowed:job')
-AddEventHandler('sqc:allowed:job', function()
-    animChance()
+RegisterNetEvent('sqc:client:allowed:job')
+AddEventHandler('sqc:client:allowed:job', function()
+    cleanMoney()
 end)

@@ -4,23 +4,23 @@ local ox_inventory = exports.ox_inventory
 RegisterNetEvent('esx:playerLoaded', function(player, xPlayer, isNew)
 
   end)
-RegisterNetEvent('sqc:check:job')
-AddEventHandler('sqc:check:job', function()
+RegisterNetEvent('sqc:server:check:job')
+AddEventHandler('sqc:server:check:job', function()
  local source = source
  local xPlayer = ESX.GetPlayerFromId(source)
  local hasJob = false
 
-if Config.job then
+if Config.jobRestriction then
  for _ , v in ipairs(Config.whiteListJobs) do
    if xPlayer.getJob().name == v then
-    TriggerClientEvent('sqc:allowed:job', source)
+    TriggerClientEvent('sqc:client:allowed:job', source)
     hasJob = true
     return
    end
 end
 end
-if not Config.job then
-    TriggerClientEvent('sqc:allowed:job', source)
+if not Config.jobRestriction then
+    TriggerClientEvent('sqc:client:allowed:job', source)
     return
 end
 if not hasJob then
@@ -34,8 +34,8 @@ if not hasJob then
 end
 end)
 
-RegisterNetEvent('sqc:washingMoney')
-AddEventHandler('sqc:washingMoney', function(chance, hasMoney, id, distance, playerPos, wash)
+RegisterNetEvent('sqc:server:washingMoney')
+AddEventHandler('sqc:server:washingMoney', function(chance, hasMoney, id, distance, playerPos, wash)
     if chance      == nil then return end
     if hasMoney    == nil then return end
     if id          == nil then return end
