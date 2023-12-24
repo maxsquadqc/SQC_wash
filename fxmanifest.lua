@@ -5,7 +5,7 @@ game 'gta5'
 
 author 'SQC_Max'
 description 'Washing script to clean black money'
-version '0.1.0'
+version '1.2'
 
 shared_script(
 '@ox_lib/init.lua',    
