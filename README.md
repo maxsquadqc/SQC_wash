@@ -12,6 +12,8 @@ To clean ur black money you will need the item 'black_money' and find one of the
 There a 40% fee for washing ur money EXAMPLE : washing 100k will give you back in clean money 60K This can be changed in Config file
 ## Features
 - Clean ur black money for clean money.
+- Now use jobs restriction (example: Police , ems , mechanic) will be able to use it
+- Highly configurable
 ### Ox_lib
 - OX_Lib are used to make the points , the input dialog , show text
 ### Installation
