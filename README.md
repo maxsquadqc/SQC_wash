@@ -1,5 +1,5 @@
 # SQC_Wash
-Clean ur dirty money with this simple washing script.
+Clean ur dirty money with this simple washing script. [Showcase](https://medal.tv/games/gta-v/clips/1IoziNOVbZb-hI/d1337whQQhEx?invite=cr-MSxuS2MsNjIxNDg0NDgs)
 ## Table of Contents
 - [SQC_wash](SQC-wash)
   - [Description](#description)
