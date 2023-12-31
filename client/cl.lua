@@ -32,7 +32,7 @@ local function cleanMoney()
                 title         = 'Error pocket',
                 description   = 'You dont have that amount in the pocket little boy',
                 type          = 'error',
-                icon          = 'fa-solid fa-circle-exclamation
+                icon          = 'fa-solid fa-circle-exclamation'
             })
             return
         end
