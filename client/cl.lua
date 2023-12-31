@@ -23,7 +23,7 @@ local function cleanMoney()
             title         = 'Error amount',
             description   = 'You didnt enter amounts ',
             type          = 'error',
-            icon          = 'fa-solid fa-money-bill-1-wave'
+            icon          = 'fa-solid fa-circle-exclamation'
         })
          return end
 
@@ -32,7 +32,7 @@ local function cleanMoney()
                 title         = 'Error pocket',
                 description   = 'You dont have that amount in the pocket little boy',
                 type          = 'error',
-                icon          = 'fa-solid fa-money-bill-1-wave'
+                icon          = 'fa-solid fa-circle-exclamation
             })
             return
         end
