@@ -1,5 +1,7 @@
 Config = {}
 
+Config.DiscordWebhook = '' -- use discord webhook
+
 Config.jobRestriction = true  -- Change this to false if you dont want to use Job
 
 Config.whiteListJobs = { -- Add/Change job only job here will be allowed to wash money
