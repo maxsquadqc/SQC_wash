@@ -1,9 +1,24 @@
 ESX = exports['es_extended']:getSharedObject()
 local ox_inventory = exports.ox_inventory
+local DISCORD_WEBHOOK_URL = Config.DiscordWebhook
 
-RegisterNetEvent('esx:playerLoaded', function(player, xPlayer, isNew)
-
-  end)
+function SendDiscordWebhookMessage(source, wash, percent)
+    local data = {
+        embeds = {
+            {
+                title = "Washing machine logs",
+                description = string.format("Player ID: %s\nMoney Washed: %s\nReceived: %s", source, wash, percent),
+                color = 65280, -- Optional: Color for the embed in decimal format
+                timestamp = os.date('!%Y-%m-%dT%H:%M:%SZ') -- Optional: Timestamp in ISO 8601 format
+            }
+        }
+    }
+    PerformHttpRequest(DISCORD_WEBHOOK_URL, function(statusCode, responseData, headers)
+        -- Handle the response here (optional)
+        print("Discord webhook message sent:", statusCode)
+        print(responseData)
+    end, 'POST', json.encode(data), { ['Content-Type'] = 'application/json' })
+end
 RegisterNetEvent('sqc:server:check:job')
 AddEventHandler('sqc:server:check:job', function()
  local source = source
@@ -33,7 +48,6 @@ if not hasJob then
     })
 end
 end)
-
 RegisterNetEvent('sqc:server:washingMoney')
 AddEventHandler('sqc:server:washingMoney', function(chance, hasMoney, id, distance, playerPos, wash)
     if chance      == nil then return end
@@ -55,6 +69,7 @@ AddEventHandler('sqc:server:washingMoney', function(chance, hasMoney, id, distan
         if ox_inventory:CanCarryItem(source, 'money', percent) then
             ox_inventory:RemoveItem(source, 'black_money', wash)
             ox_inventory:AddItem(source, 'money', percent)
+            SendDiscordWebhookMessage(source, wash, percent)
         end
         TriggerClientEvent('ox_lib:notify', source, {
             title = 'Washing machine',
