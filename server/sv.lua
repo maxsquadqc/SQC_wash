@@ -1,4 +1,4 @@
-ESX = exports['es_extended']:getSharedObject()
+local QBCore = exports['qb-core']:GetCoreObject()
 local ox_inventory = exports.ox_inventory
 local DISCORD_WEBHOOK_URL = Config.DiscordWebhook
 
@@ -22,7 +22,7 @@ end
 RegisterNetEvent('sqc:server:check:job')
 AddEventHandler('sqc:server:check:job', function()
  local source = source
- local xPlayer = ESX.GetPlayerFromId(source)
+ local xPlayer = QBCore.Functions.GetPlayer(source)
  local hasJob = false
 
 if Config.jobRestriction then

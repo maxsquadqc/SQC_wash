@@ -1,7 +1,7 @@
-ESX = exports['es_extended']:getSharedObject()
+local QBCore = exports['qb-core']:GetCoreObject()
 
 local function cleanMoney()
-    local playerId = PlayerPedId()
+    local playerId = cache.ped
     local playerPos  = GetEntityCoords(playerId)
     local hasMoney = exports.ox_inventory:Search('count', 'black_money')
     local luck     = math.random(1, 10)
@@ -81,8 +81,19 @@ local function cleanMoney()
    return end
 end
 
+CreateThread(function ()
+    exports.ox_target:addModel('ch_prop_ch_laundry_machine_01a', {{
+        name = 'start_money_wash',
+        event = 'sqc:server:check:job',
+        icon = 'fa-solid fa-comments-dollar',
+        canInteract = function(_, distance)
+            return distance < 2.5
+        end
+    }})
+end)
+
 for shop, data in pairs(Config.washing) do
-    local xPlayer = ESX.GetPlayerData()
+    local xPlayer = QBCore.Functions.GetPlayerData()
     local point = lib.points.new(data.loc, 2, {})
 
     function point:onEnter()
@@ -103,8 +114,13 @@ for shop, data in pairs(Config.washing) do
 
     function point:nearby()
         if self.currentDistance < 2 then
-            DrawMarker(29, self.coords.x, self.coords.y, self.coords.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 1.0, 1.0, 1.0, 200, 20, 20, 50, false, true, 2, false, nil, nil, false)
-        end
+            RequestStreamedTextureDict("4.0_inspired")
+                if not HasStreamedTextureDictLoaded("4.0_inspired") then
+                Wait(250)
+            end
+            SetDrawOrigin(self.coords.x, self.coords.y, self.coords.z,, 0)
+            DrawSprite("4.0_inspired", "Key-H-Red", 0, 0, 0.02, 0.035, 0, 255,255,255, 255.0)
+         end
 
         if self.currentDistance < 2 and IsControlJustPressed(0, 38) then
             TriggerServerEvent('sqc:server:check:job')

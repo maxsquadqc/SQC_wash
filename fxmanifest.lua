@@ -9,7 +9,6 @@ version '1.2'
 
 shared_script(
 '@ox_lib/init.lua',    
-'@es_extended/imports.lua',
 'config.lua');
 
 server_scripts{
