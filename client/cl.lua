@@ -81,6 +81,17 @@ local function cleanMoney()
    return end
 end
 
+CreateThread(function ()
+    exports.ox_target:addModel('ch_prop_ch_laundry_machine_01a', {{
+        name = 'start_money_wash',
+        event = 'sqc:server:check:job',
+        icon = 'fa-solid fa-comments-dollar',
+        canInteract = function(_, distance)
+            return distance < 2.5
+        end
+    }})
+end)
+
 for shop, data in pairs(Config.washing) do
     local xPlayer = QBCore.Functions.GetPlayerData()
     local point = lib.points.new(data.loc, 2, {})
