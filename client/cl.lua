@@ -1,7 +1,7 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
 local function cleanMoney()
-    local playerId = PlayerPedId()
+    local playerId = cache.ped
     local playerPos  = GetEntityCoords(playerId)
     local hasMoney = exports.ox_inventory:Search('count', 'black_money')
     local luck     = math.random(1, 10)
