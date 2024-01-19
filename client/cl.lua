@@ -1,4 +1,4 @@
-ESX = exports['es_extended']:getSharedObject()
+local QBCore = exports['qb-core']:GetCoreObject()
 
 local function cleanMoney()
     local playerId = PlayerPedId()
@@ -82,7 +82,7 @@ local function cleanMoney()
 end
 
 for shop, data in pairs(Config.washing) do
-    local xPlayer = ESX.GetPlayerData()
+    local xPlayer = QBCore.Functions.GetPlayerData()
     local point = lib.points.new(data.loc, 2, {})
 
     function point:onEnter()
