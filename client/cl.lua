@@ -103,8 +103,13 @@ for shop, data in pairs(Config.washing) do
 
     function point:nearby()
         if self.currentDistance < 2 then
-            DrawMarker(29, self.coords.x, self.coords.y, self.coords.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 1.0, 1.0, 1.0, 200, 20, 20, 50, false, true, 2, false, nil, nil, false)
-        end
+            RequestStreamedTextureDict("4.0_inspired")
+                if not HasStreamedTextureDictLoaded("4.0_inspired") then
+                Wait(250)
+            end
+            SetDrawOrigin(self.coords.x, self.coords.y, self.coords.z,, 0)
+            DrawSprite("4.0_inspired", "Key-H-Red", 0, 0, 0.02, 0.035, 0, 255,255,255, 255.0)
+         end
 
         if self.currentDistance < 2 and IsControlJustPressed(0, 38) then
             TriggerServerEvent('sqc:server:check:job')
