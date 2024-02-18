@@ -2,21 +2,18 @@ ESX = exports['es_extended']:getSharedObject()
 local ox_inventory = exports.ox_inventory
 local DISCORD_WEBHOOK_URL = Config.DiscordWebhook
 
-function SendDiscordWebhookMessage(source, wash, percent)
+function SendDiscordWebhookMessage(source, playerName, wash, percent)
     local data = {
         embeds = {
             {
                 title = "Washing machine logs",
-                description = string.format("Player ID: %s\nMoney Washed: %s\nReceived: %s", source, wash, percent),
+                description = string.format("Player ID: %s\nPlayerName: %s\nMoney Washed: %s\nReceived: %s", source, playerName, wash, percent),
                 color = 65280, -- Optional: Color for the embed in decimal format
-                timestamp = os.date('!%Y-%m-%dT%H:%M:%SZ') -- Optional: Timestamp in ISO 8601 format
+                timestamp = os.date('!%Y-%m-%dT%H:%M:%SZ') 
             }
         }
     }
     PerformHttpRequest(DISCORD_WEBHOOK_URL, function(statusCode, responseData, headers)
-        -- Handle the response here (optional)
-        print("Discord webhook message sent:", statusCode)
-        print(responseData)
     end, 'POST', json.encode(data), { ['Content-Type'] = 'application/json' })
 end
 RegisterNetEvent('sqc:server:check:job')
@@ -57,11 +54,13 @@ AddEventHandler('sqc:server:washingMoney', function(chance, hasMoney, id, distan
     if playerPos   == nil then return end
     if wash        == nil then return end
 
-    local source    = source
-    local sourcePed = GetPlayerPed(source)
-    local sourcePos = GetEntityCoords(sourcePed)
-    local countItem = ox_inventory:Search(source, 'count', 'black_money')
-    local percent   = wash * Config.percentage
+    local source       = source
+    local sourcePed    = GetPlayerPed(source)
+    local sourcePos    = GetEntityCoords(sourcePed)
+    local xPlayer      = ESX.GetPlayerFromId(source)
+    local playerName   = xPlayer.getName()
+    local countItem    = ox_inventory:Search(source, 'count', 'black_money')
+    local percent      = wash * Config.percentage
 
     if countItem <= 10 then
         return
@@ -69,7 +68,7 @@ AddEventHandler('sqc:server:washingMoney', function(chance, hasMoney, id, distan
         if ox_inventory:CanCarryItem(source, 'money', percent) then
             ox_inventory:RemoveItem(source, 'black_money', wash)
             ox_inventory:AddItem(source, 'money', percent)
-            SendDiscordWebhookMessage(source, wash, percent)
+            SendDiscordWebhookMessage(source, playerName, wash, percent)
         end
         TriggerClientEvent('ox_lib:notify', source, {
             title = 'Washing machine',

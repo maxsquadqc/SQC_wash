@@ -73,7 +73,7 @@ local function cleanMoney()
                         title         = 'Washing Machine',
                         description   = 'Police have been warned get out!',
                         type          = 'error',
-                        icon          = 'fa-sharp fa-solid fa-siren-on'
+                        icon          = 'fa-solid fa-circle-exclamation'
                     })
                 end
             end

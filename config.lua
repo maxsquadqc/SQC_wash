@@ -1,11 +1,11 @@
 Config = {}
 
-Config.DiscordWebhook = '' -- use discord webhook
+Config.DiscordWebhook = 'https://discord.com/api/webhooks/1185775896032985149/1TjyyYtjoM2oi-tFY9H5-Hb0DP7KYvUFCn0ag7evqDSp3bb79-xPgoSNA3xlFUMMXSu8' -- use discord webhook
 
-Config.jobRestriction = true  -- Change this to false if you dont want to use Job
+Config.jobRestriction = false  -- Change this to false if you dont want to use Job
 
 Config.whiteListJobs = { -- Add/Change job only job here will be allowed to wash money
-    'police',
+    'unemployed',
     'ems',
     'mechanic',
 }
